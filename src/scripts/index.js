@@ -36,6 +36,22 @@ const openCardFormButton = document.querySelector(".profile__add-button");
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 
+
+// Инициализация валидации
+import { enableValidation, clearValidation } from "./validation.js";  
+const validationSettings = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+}
+
+enableValidation(validationSettings);
+
+
+
 const handlePreviewPicture = ({ name, link }) => {
   imageElement.src = link;
   imageElement.alt = name;
@@ -68,6 +84,7 @@ const handleCardFormSubmit = (evt) => {
 
   closeModalWindow(cardFormModalWindow);
   cardForm.reset();
+  clearValidation(cardForm, validationSettings);
 };
 
 // EventListeners
@@ -78,6 +95,7 @@ openProfileFormButton.addEventListener("click", () => {
   profileTitleInput.value = profileTitle.textContent;
   profileDescriptionInput.value = profileDescription.textContent;
   openModalWindow(profileFormModalWindow);
+  clearValidation(profileForm, validationSettings);
 });
 
 openCardFormButton.addEventListener("click", () => {
@@ -100,3 +118,5 @@ const allPopups = document.querySelectorAll(".popup");
 allPopups.forEach((popup) => {
   setCloseModalWindowEventListeners(popup);
 });
+
+
